@@ -1,5 +1,6 @@
 import axios from 'axios'
-const { API } = require('./config')
+import { API } from './config'
+
 
 const axiosStandart = axios.create({
 	baseURL: API,
