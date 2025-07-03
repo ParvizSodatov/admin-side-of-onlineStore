@@ -1,3 +1,4 @@
+import { getBrands } from '@/store/reducers/brands/reducer'
 import { getCategory } from '@/store/reducers/category/reducer'
 import { getColors } from '@/store/reducers/products/reducer'
 import { Upload } from '@mui/icons-material'
@@ -31,10 +32,13 @@ export default function AddNew() {
 	const [count, setCount] = useState('')
 
 	const { category } = useSelector(store => store.category)
-	// console.log('category :',category)
+	const { brand } = useSelector(store => store.brand)
+	console.log('brand:', brand)
+
 	useEffect(() => {
 		dispatch(getCategory())
 		dispatch(getColors())
+		dispatch(getBrands())
 	}, [])
 	return (
 		<>
@@ -103,7 +107,9 @@ export default function AddNew() {
 									label='Categories'
 								>
 									{category?.map(el => (
-										<MenuItem key={el.id}  value={el.id}>{el.categoryName}</MenuItem>
+										<MenuItem key={el.id} value={el.id}>
+											{el.categoryName}
+										</MenuItem>
 									))}
 								</Select>
 							</FormControl>
@@ -117,11 +123,12 @@ export default function AddNew() {
 									value={brands}
 									onChange={e => setBrands}
 									label='Categories'
-							
 								>
-									<MenuItem value={10}>Ten</MenuItem>
-									<MenuItem value={20}>Twenty</MenuItem>
-									<MenuItem value={30}>Thirty</MenuItem>
+									{brand?.map(el => (
+										<MenuItem key={el.id} value={el.id}>
+											{el.brandName}
+										</MenuItem>
+									))}
 								</Select>
 							</FormControl>
 						</Box>
