@@ -13,7 +13,7 @@ import { useDispatch, useSelector } from 'react-redux'
 // import EditSquareIcon from '@mui/icons-material/EditSquare';
 import { API } from '@/utils/config'
 import EditIcon from '@mui/icons-material/Edit'
-// import DeleteIcon from '@mui/icons-material/Delete';
+import { Link } from 'react-router-dom'
 const Dashboard = () => {
 	const dispatch = useDispatch()
 	const { products } = useSelector(store => store.dashboard)
@@ -21,9 +21,12 @@ const Dashboard = () => {
 	useEffect(() => {
 		dispatch(getProduct())
 	}, [])
-
 	return (
 		<>
+       <div className='flex justify-around'> 
+			<h1 className='text-[30px]'>Products</h1>
+			<Link to='/addNew'><Button  sx={{backgroundColor:'#2563EB',color:'white'}}>+Add Order</Button></Link>
+		 </div>
 			<TableContainer component={Paper}>
 				<Table sx={{ minWidth: 650 }} aria-label='simple table'>
 					<TableHead>
@@ -41,7 +44,7 @@ const Dashboard = () => {
 						</TableRow>
 					</TableHead>
 					<TableBody>
-						{products.map(row => (
+						{products?.map(row => (
 							<TableRow
 								key={row.id}
 								sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -62,7 +65,7 @@ const Dashboard = () => {
 
 								<TableCell align='center'>{row.quantity}</TableCell>
 								<TableCell align='center'>{row.categoryName}</TableCell>
-								<TableCell align='center'>{row.price}$</TableCell>
+								<TableCell align='center'>${row.price}</TableCell>
 								<TableCell align='center'>
 									<div>
 										<Button>

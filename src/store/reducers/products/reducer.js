@@ -17,17 +17,28 @@ export const deleteProduct=createAsyncThunk('dashboard/deleteProduct',async (id,
 dispatch(getProduct())
 	} catch (error) {
 		console.log(error);
-		
+	}
+})
+export const getColors=createAsyncThunk('dashboard/getColors',async () => {
+	try {
+		let {data}=await axiosStandart.get("/Color/get-colors")
+		return data.data
+	} catch (error) {
+		console.log(error);	
 	}
 })
 export const dashbordSlice=createSlice({
 	name:'dashboard',
 	initialState:{
-  products:[]
+  products:[],
+  colors:[]
 	},
 	extraReducers:(builder)=>{
 		builder.addCase(getProduct.fulfilled,(state,action)=>{
 			state.products=action.payload
+		})
+		builder.addCase(getColors.fulfilled,(state,action)=>{
+			state.colors=action.payload
 		})
 	}
 })
