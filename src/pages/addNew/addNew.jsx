@@ -1,3 +1,4 @@
+import { getCategory } from '@/store/reducers/category/reducer'
 import { getColors } from '@/store/reducers/products/reducer'
 import { Upload } from '@mui/icons-material'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
@@ -13,15 +14,26 @@ import {
 	TextField,
 	Typography,
 } from '@mui/material'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 export default function AddNew() {
 	const dispatch = useDispatch()
 	const { colors } = useSelector(store => store.dashboard)
-	console.log('colors :', colors)
+	const [productName, setAddName] = useState('')
+	const [code, setCode] = useState('')
+	const [description, setDescription] = useState('')
+	const [categories, setCategories] = useState('')
+	const [brands, setBrands] = useState('')
+	const [subcategory, setSubcategories] = useState('')
+	const [price, setPrice] = useState('')
+	const [discount, setDiscount] = useState('')
+	const [count, setCount] = useState('')
 
+	const { category } = useSelector(store => store.category)
+	// console.log('category :',category)
 	useEffect(() => {
+		dispatch(getCategory())
 		dispatch(getColors())
 	}, [])
 	return (
@@ -42,7 +54,6 @@ export default function AddNew() {
 				</div>
 			</div>
 			<h1 className='font-bold mt-[30px] ml-[30px] text-[26px]'>information</h1>
-
 			<section className='flex  gap-[100px]'>
 				<aside className='mt-[30px] w-[60%]'>
 					<div className='w-[100%] flex justify-between'>
@@ -50,17 +61,23 @@ export default function AddNew() {
 							sx={{ width: '70%' }}
 							id='outlined-basic'
 							label='Product Name'
+							value={productName}
+							onChange={e => setAddName(e.target.value)}
 							variant='outlined'
 						/>
 						<TextField
 							sx={{ width: '25%' }}
 							id='outlined-basic'
 							label='Code'
+							value={code}
+							onChange={e => setCode(e.target.value)}
 							variant='outlined'
 						/>
 					</div>
 					<TextareaAutosize
 						aria-label='empty textarea'
+						value={description}
+						onChange={e => setDescription(e.target.value)}
 						placeholder='Description'
 						style={{
 							width: '100%',
@@ -79,13 +96,15 @@ export default function AddNew() {
 									Categories
 								</InputLabel>
 								<Select
+									value={categories}
+									onChange={e => setCategories(e.target.value)}
 									labelId='demo-simple-select-label'
 									id='demo-simple-select'
 									label='Categories'
 								>
-									<MenuItem value={10}>Ten</MenuItem>
-									<MenuItem value={20}>Twenty</MenuItem>
-									<MenuItem value={30}>Thirty</MenuItem>
+									{category?.map(el => (
+										<MenuItem key={el.id}  value={el.id}>{el.categoryName}</MenuItem>
+									))}
 								</Select>
 							</FormControl>
 						</Box>
@@ -95,9 +114,10 @@ export default function AddNew() {
 								<Select
 									labelId='demo-simple-select-label'
 									id='demo-simple-select'
-									// value={age}
+									value={brands}
+									onChange={e => setBrands}
 									label='Categories'
-									// onChange={handleChange}
+							
 								>
 									<MenuItem value={10}>Ten</MenuItem>
 									<MenuItem value={20}>Twenty</MenuItem>
@@ -113,7 +133,8 @@ export default function AddNew() {
 								<Select
 									labelId='demo-simple-select-label'
 									id='demo-simple-select'
-									// value={age}
+									value={subcategory}
+									onChange={e => setSubcategories(e.target.value)}
 									label='Categories'
 									// onChange={handleChange}
 								>
@@ -129,18 +150,24 @@ export default function AddNew() {
 						<TextField
 							id='outlined-basic'
 							label='Product price'
+							value={price}
+							onChange={e => setPrice(e.target.value)}
 							variant='outlined'
 							type='number'
 						/>
 						<TextField
 							id='outlined-basic'
 							label='Discount'
+							value={discount}
+							onChange={e => setDiscount(e.target.value)}
 							variant='outlined'
 							type='number'
 						/>
 						<TextField
 							id='outlined-basic'
 							label='Count'
+							value={count}
+							onChange={e => setCount(e.target.value)}
 							variant='outlined'
 							type='number'
 						/>
@@ -160,34 +187,34 @@ export default function AddNew() {
 						</div>
 					</div>
 					<div className='mt-[60px]'>
-						 <Paper
-            variant="outlined"
-            sx={{
-              p: 2,
-              textAlign: "center",
-              position: "relative",
-              cursor: "pointer",
-              border: "2px dashed #ccc",
-              "&:hover": { borderColor: "#999" },
-            }}
-            onClick={() => document.getElementById("file-upload")?.click()}
-          >
-            <input
-              id="file-upload"
-              type="file"
-              accept="image/*"
-              multiple
-              hidden
-             onChange={(e)=>setFiles(e.target.files)}
-            />
-            <Upload size={20} style={{ marginBottom: 4, margin: "auto" }} />
-            <Typography variant="body2">
-              Click to upload or drag and drop
-            </Typography>
-            <Typography variant="caption">
-              (SVG, JPG, PNG, or GIF maximum 900×400)
-            </Typography>
-          </Paper>
+						<Paper
+							variant='outlined'
+							sx={{
+								p: 2,
+								textAlign: 'center',
+								position: 'relative',
+								cursor: 'pointer',
+								border: '2px dashed #ccc',
+								'&:hover': { borderColor: '#999' },
+							}}
+							onClick={() => document.getElementById('file-upload')?.click()}
+						>
+							<input
+								id='file-upload'
+								type='file'
+								accept='image/*'
+								multiple
+								hidden
+								onChange={e => setFiles(e.target.files)}
+							/>
+							<Upload size={20} style={{ marginBottom: 4, margin: 'auto' }} />
+							<Typography variant='body2'>
+								Click to upload or drag and drop
+							</Typography>
+							<Typography variant='caption'>
+								(SVG, JPG, PNG, or GIF maximum 900×400)
+							</Typography>
+						</Paper>
 					</div>
 				</aside>
 			</section>
