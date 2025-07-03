@@ -10,7 +10,6 @@ export default function Login() {
 			<div className='border-[1px] border-solid border-black w-[45%]'>	
 		</div>
 	</section>
-
 		</>
 	)
 }
