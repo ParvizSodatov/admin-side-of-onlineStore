@@ -35,7 +35,7 @@ export const addProduct = createAsyncThunk(
 	async formdata => {
 		try {
 			await axiosRequest.post('/Product/add-product', formdata)
-			//   dispatch(getProduct())
+		
 		} catch (error) {
 			console.log(error)
 		}
