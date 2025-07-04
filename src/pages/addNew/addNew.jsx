@@ -1,6 +1,6 @@
 import { getBrands } from '@/store/reducers/brands/reducer'
 import { getCategory } from '@/store/reducers/category/reducer'
-import { getColors } from '@/store/reducers/products/reducer'
+import { addProduct, getColors } from '@/store/reducers/products/reducer'
 import { getSubCategory } from '@/store/reducers/subCategory/reducer'
 import { Upload } from '@mui/icons-material'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
@@ -31,11 +31,49 @@ export default function AddNew() {
 	const [price, setPrice] = useState('')
 	const [discount, setDiscount] = useState('')
 	const [count, setCount] = useState('')
-
+	const [colorId, setColorId] = useState(null)
+	const[addImage,setImage]=useState('')
 	const { category } = useSelector(store => store.category)
 	const { brand } = useSelector(store => store.brand)
-   const {subCategor}=useSelector((store)=>store.subCategory)
+	//   const [files, setFiles] = useState(null);
+	const { subCategor } = useSelector(store => store.subCategory)
 
+function clearAllForms(){
+	setAddName('')
+	setCode('')
+	setDescription('')
+	setBrands('')
+	setCategories('')
+	setSubcategories('')
+	setPrice('')
+	setDiscount('')
+	setCount('')
+	setColorId('')
+	setImage('')
+	setFiles(null)
+
+}
+
+
+	
+	function handleAdd(e) {
+		e.preventDefault()
+		const formdata = new FormData()
+		formdata.append('ProductName', productName)
+		formdata.append('Code', code)
+		formdata.append('Description', description)
+		formdata.append('BrandId', brands)
+		formdata.append('SubCategoryId', subcategory)
+		formdata.append('Price', price)
+		formdata.append('HasDiscount', false)
+		formdata.append('ColorId', colorId)
+		formdata.append('Quantity',count)
+      for(let i=0;i<addImage.length;i++){
+			 formdata.append('Images',addImage[i])
+		}
+		dispatch(addProduct(formdata))
+		clearAllForms()
+	}
 	useEffect(() => {
 		dispatch(getCategory())
 		dispatch(getColors())
@@ -55,8 +93,8 @@ export default function AddNew() {
 					<span className='font-bold'>Product/Add new</span>
 				</div>
 				<div className='flex gap-[10px]'>
-					<Button variant='outlined'>Cancel</Button>
-					<Button variant='contained'>Save</Button>
+					<Button variant='outlined' onClick={clearAllForms}>Cancel</Button>
+					<Button variant='contained' onClick={handleAdd}>Save</Button>
 				</div>
 			</div>
 			<h1 className='font-bold mt-[30px] ml-[30px] text-[26px]'>information</h1>
@@ -123,7 +161,7 @@ export default function AddNew() {
 									labelId='demo-simple-select-label'
 									id='demo-simple-select'
 									value={brands}
-									onChange={e => setBrands}
+									onChange={e => setBrands(e.target.value)}
 									label='Categories'
 								>
 									{brand?.map(el => (
@@ -144,16 +182,11 @@ export default function AddNew() {
 									id='demo-simple-select'
 									value={subcategory}
 									onChange={e => setSubcategories(e.target.value)}
-									label='Categories'	
+									label='Categories'
 								>
-									{
-										subCategor?.map((el)=>(
-											 <MenuItem value={el.id}>{el.subCategoryName}</MenuItem>
-											
-										))
-									}
-
-									
+									{subCategor?.map(el => (
+										<MenuItem value={el.id}>{el.subCategoryName}</MenuItem>
+									))}
 								</Select>
 							</FormControl>
 						</Box>
@@ -189,15 +222,18 @@ export default function AddNew() {
 				<aside>
 					<div>
 						<h1>Color</h1>
-						<div className='flex flex-wrap gap-[20px] mt-[30px] border-[1px] border-solid border-gray-500 justify-around  px-[10px] py-[19px] rounded-[10px] '>
-							{colors.map(el => (
-								<div
-									key={el.id}
-									style={{ backgroundColor: el.colorName }}
-									className='w-[70px] h-[70px] rounded-full border border-gray-400 dark:border-gray-600'
-								></div>
-							))}
-						</div>
+						<div className='flex flex-wrap gap-[20px] mt-[30px] border-[1px] border-solid border-gray-500 justify-around px-[10px] py-[19px] rounded-[10px]'>
+  {colors.map(el => (
+    <div
+      onClick={() => setColorId(el.id)}
+      key={el.id}
+      style={{ backgroundColor: el.colorName }}
+      className={`w-[70px] h-[70px] rounded-full border 
+        ${colorId === el.id ? 'border-4 border-blue-600' : 'border-gray-400 dark:border-gray-600'}`}
+    ></div>
+  ))}
+</div>
+
 					</div>
 					<div className='mt-[60px]'>
 						<Paper
@@ -218,7 +254,7 @@ export default function AddNew() {
 								accept='image/*'
 								multiple
 								hidden
-								onChange={e => setFiles(e.target.files)}
+								onChange={e => setImage(e.target.files)}
 							/>
 							<Upload size={20} style={{ marginBottom: 4, margin: 'auto' }} />
 							<Typography variant='body2'>
