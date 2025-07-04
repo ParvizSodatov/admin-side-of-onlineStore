@@ -11,8 +11,6 @@ export const LoginAdmin=createAsyncThunk('login/Login',async (user) => {
 		
 	}
 })
-
-
 export const LoginSlice=createSlice({
 	name:'login',
 	initialState:{

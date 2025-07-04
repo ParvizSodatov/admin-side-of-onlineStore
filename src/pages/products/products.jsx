@@ -23,10 +23,14 @@ const Dashboard = () => {
 	}, [])
 	return (
 		<>
-       <div className='flex justify-around'> 
-			<h1 className='text-[30px]'>Products</h1>
-			<Link to='/addNew'><Button  sx={{backgroundColor:'#2563EB',color:'white'}}>+Add Order</Button></Link>
-		 </div>
+			<div className='flex justify-around'>
+				<h1 className='text-[30px]'>Products</h1>
+				<Link to='/addNew'>
+					<Button sx={{ backgroundColor: '#2563EB', color: 'white' }}>
+						+Add Order
+					</Button>
+				</Link>
+			</div>
 			<TableContainer component={Paper}>
 				<Table sx={{ minWidth: 650 }} aria-label='simple table'>
 					<TableHead>
@@ -68,14 +72,16 @@ const Dashboard = () => {
 								<TableCell align='center'>${row.price}</TableCell>
 								<TableCell align='center'>
 									<div>
-										<Button>
-											<EditIcon sx={{ color: 'blue' }} />
-										</Button>
-										<Button onClick={()=>dispatch(deleteProduct(row.id))}>
+										<Link to={`/editProduct/${row.id}`}>
+											<Button>
+												<EditIcon sx={{ color: 'blue' }} />
+											</Button>
+										</Link>
+										<Button onClick={() => dispatch(deleteProduct(row.id))}>
 											<DeleteOutlineIcon sx={{ color: 'red' }} />
 										</Button>
 									</div>
-						</TableCell>
+								</TableCell>
 							</TableRow>
 						))}
 					</TableBody>
