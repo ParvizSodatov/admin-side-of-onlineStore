@@ -28,6 +28,16 @@ export const getCategory=createAsyncThunk('category/getCategory',async () => {
 	}
   })
 
+  export const addCategory=createAsyncThunk('category/addCategory',async (fromData,{dispatch}) => {
+	try {
+		await axiosRequest.post('/Category/add-category',fromData)
+		dispatch(getCategory())
+	} catch (error) {
+		console.log(error);
+		
+	}
+  })
+
 export const categorySlice=createSlice({
 	name:'category',
 	initialState:{
