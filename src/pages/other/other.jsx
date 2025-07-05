@@ -8,7 +8,7 @@ import { API } from '@/utils/config'
 import { Button } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useFetcher } from 'react-router-dom'
+import { Link, useFetcher } from 'react-router-dom'
 import EditIcon from '@mui/icons-material/Edit'
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
 // import Button from '@mui/material/Button';
@@ -74,7 +74,7 @@ formData.append('CategoryImage',addImage[i])
 		<section className='flex justify-between w-[80%]'>
       	<div className='flex gap-[20px]'>
 				<Button sx={{ border: '1px solid blue' }}>Category</Button>
-				<Button sx={{ border: '1px solid blue' }} >Brand</Button>
+			<Link to='/brand'>	<Button sx={{ border: '1px solid blue' }} >Brand</Button></Link>
 			</div>
 			<div>
 				<Button sx={{ border: '1px solid blue' }} onClick={handleAddClickOpen}>+Add</Button>

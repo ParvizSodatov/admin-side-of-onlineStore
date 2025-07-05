@@ -7,6 +7,7 @@ import Other from "/src/pages/Other/other";
 import Login from './pages/login/login'
 import AddNew from './pages/addNew/addNew'
 import EditProduct from './pages/editProduct/editProduct'
+import Brand from './pages/brand/brand'
 function App() {
   const router = createBrowserRouter([
     {
@@ -34,7 +35,13 @@ function App() {
           path: "/addNew",
           element: <AddNew />,
         },
+
+          {
+          path: "/brand",
+          element: <Brand/>,
+        },
          {
+
           path: "/editProduct/:id",
           element: <EditProduct />,
         },
