@@ -73,18 +73,18 @@ formData.append('CategoryImage',addImage[i])
 		<>
 		<section className='flex justify-between w-[80%]'>
       	<div className='flex gap-[20px]'>
-				<Button sx={{ border: '1px solid blue' }}>Category</Button>
+				<Button sx={{ backgroundColor:'blue',color:'white' }}>Category</Button>
 			<Link to='/brand'>	<Button sx={{ border: '1px solid blue' }} >Brand</Button></Link>
 			</div>
 			<div>
-				<Button sx={{ border: '1px solid blue' }} onClick={handleAddClickOpen}>+Add</Button>
+				<Button sx={{ border: '1px solid blue' }} onClick={handleAddClickOpen}>+Add Category</Button>
 			</div>
     </section>
 			<div className="flex flex-wrap gap-[20px] mt-[30px]">
   {category?.map(el => (
     <div
       key={el.id}
-      className="w-[182px] border border-gray-300 rounded-[8px] overflow-hidden shadow-md bg-white transition-transform hover:scale-105 hover:shadow-lg"
+      className="w-[182px] border border-gray-300 rounded-[8px] overflow-hidden shadow-md  transition-transform hover:scale-105 hover:shadow-lg"
     >
       <div className="flex flex-col items-center p-4">
         <img
@@ -92,7 +92,7 @@ formData.append('CategoryImage',addImage[i])
           src={`${API}/images/${el.categoryImage}`}
           alt=""
         />
-        <h1 className="text-center text-gray-800 font-semibold mb-3">
+        <h1 className="text-center text-gray-400 font-semibold mb-3">
           {el.categoryName}
         </h1>
         <div className="flex justify-center gap-2">

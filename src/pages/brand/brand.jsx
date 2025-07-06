@@ -24,6 +24,8 @@ import DialogTitle from '@mui/material/DialogTitle'
 // import EditSquareIcon from '@mui/icons-material/EditSquare';
 import EditNoteIcon from '@mui/icons-material/EditNote'
 import DeleteIcon from '@mui/icons-material/Delete'
+import { Link } from 'react-router-dom'
+import { blue } from '@mui/material/colors'
 export default function Brand() {
 	const [openEdit, setOpenEdit] = useState(false)
 	const [brandId, setBrandId] = useState(null)
@@ -37,17 +39,15 @@ export default function Brand() {
 	const handleAddClose = () => {
 		setOpenAdd(false)
 	}
-   function handleAddBrand(){
-		let newAddBrand={
-			BrandName:addName,
-			dispatch
+	function handleAddBrand() {
+		let newAddBrand = {
+			BrandName: addName,
+			// dispatch
 		}
-		console.log(addName);
-		
+		console.log(addName)
+
 		dispatch(addBrands(newAddBrand))
 	}
-
-
 	const handleEditClickOpen = el => {
 		setOpenEdit(true)
 		setBrandId(el.id)
@@ -73,11 +73,33 @@ export default function Brand() {
 	}, [])
 	return (
 		<>
+			<h1 className='text-[20px]'>
+				<Link className='hover:underline' to='/'>
+					Dasboard
+				</Link>
+				/
+				<Link className='hover:underline' to='/other'>
+					Other
+				</Link>
+				<h1 className='text-[30px]'>Other</h1>
+			</h1>
+			<div className='mt-[30px] flex justify-between w-[75%]'>
+				<div className='flex gap-[6px]'>
+					<Link to='/other'>
+						<Button sx={{ border: '1px solid blue' }}>Category</Button>
+					</Link>
 
-	<div>
-			<Button onClick={handleAddClickOpen} variant='contained'>+Addd</Button>
-	</div>
-			<TableContainer component={Paper} sx={{ width: '60%' }}>
+					<Button sx={{ backgroundColor:'blue',color:'white' }}>Brand</Button>
+				</div>
+
+				<Button onClick={handleAddClickOpen} sx={{ border: '1px solid blue' }}>
+					+Add Brand
+				</Button>
+			</div>
+			<TableContainer
+				component={Paper}
+				sx={{ width: '65%', marginTop: '50px' }}
+			>
 				<Table sx={{ minWidth: 650 }} aria-label='simple table'>
 					<TableHead>
 						<TableRow>

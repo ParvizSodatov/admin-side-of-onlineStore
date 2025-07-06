@@ -29,9 +29,9 @@ export const editBrands=createAsyncThunk('brand/brandsSlice',async (dispatch) =>
 	}
 })
 
-export const addBrands=createAsyncThunk('brand/addBrands',async (dispatch) => {
+export const addBrands=createAsyncThunk('brand/addBrands',async (newBrand,{dispatch}) => {
 	try {
-	await axiosRequest.post(`/Brand/add-brand?BrandName=${dispatch.BrandName}`)
+	await axiosRequest.post(`/Brand/add-brand?BrandName=${newBrand.BrandName}`)
 	dispatch(getBrands())
 	} catch (error) {
 		console.log(error);
