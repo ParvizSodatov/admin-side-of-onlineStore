@@ -4,6 +4,7 @@ import { TabRounded } from '@mui/icons-material'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import { toast, Toaster } from 'sonner'
 
 export default function Login() {
 const dispatch=useDispatch()
@@ -19,6 +20,8 @@ async function handleLogin() {
 	const result=await dispatch(LoginAdmin(newLogin))
 	if(LoginAdmin.fulfilled.match(result)){
 		navigate('/')
+  
+
 	}
 }
   return (
@@ -60,6 +63,9 @@ async function handleLogin() {
           </div>
         </div>
       </div>
+      <Toaster position="bottom-right" richColors />
     </section>
+    
   )
+  
 }

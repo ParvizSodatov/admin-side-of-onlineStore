@@ -2,6 +2,7 @@ import { axiosRequest, axiosStandart } from '@/utils/axios'
 // import { create } from '@mui/material/styles/createTransitions'
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
+import { toast } from 'sonner'
 
 export const getBrands=createAsyncThunk('brand/getBrands',async () => {
 	try {
@@ -15,6 +16,7 @@ export const deleteBrands=createAsyncThunk('brand/deleteBrands',async (id,{dispa
 	try {
 		await axiosRequest.delete(`/Brand/delete-brand?id=${id}`)
 		dispatch(getBrands())
+		toast.success('The brand is deleted succesfully')
 	} catch (error) {
 		console.log(error);
 	}

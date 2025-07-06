@@ -1,5 +1,6 @@
 import { axiosRequest, axiosStandart } from '@/utils/axios'
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { toast } from 'sonner'
 export const getCategory=createAsyncThunk('category/getCategory',async () => {
 	try {
 		let {data}=await axiosStandart.get('/Category/get-categories')
@@ -13,6 +14,7 @@ export const getCategory=createAsyncThunk('category/getCategory',async () => {
 	  try {
 	await axiosRequest.delete(`/Category/delete-category?id=${id}`)
 		dispatch(getCategory())
+		toast.success('the category is deleted successfully')
 	  } catch (error) {
 		console.log(error);
 		
@@ -23,6 +25,7 @@ export const getCategory=createAsyncThunk('category/getCategory',async () => {
 	try {
 		await axiosRequest.put('/Category/update-category',formdata)
 		dispatch(getCategory())
+		toast.success('the category is updated successfully 	')
 	} catch (error) {
 		console.log(error);
 	}
@@ -32,6 +35,7 @@ export const getCategory=createAsyncThunk('category/getCategory',async () => {
 	try {
 		await axiosRequest.post('/Category/add-category',fromData)
 		dispatch(getCategory())
+		toast.success('the category is added successfully')
 	} catch (error) {
 		console.log(error);
 		

@@ -24,6 +24,7 @@ import { useEffect, useState } from 'react'
 import { Upload } from '@mui/icons-material'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate, useParams } from 'react-router-dom'
+import { toast, Toaster } from 'sonner'
 
 export default function EditProduct() {
 	const { id } = useParams()
@@ -76,6 +77,7 @@ export default function EditProduct() {
 		}
 		const result=await dispatch(editProduct(newEditUser))
 		if(editProduct.fulfilled.match(result)){
+			toast.success('updated succes')
 			navigate('/products')
 		}
 	}
@@ -241,6 +243,7 @@ export default function EditProduct() {
 					</div>
 				</aside>
 			</section>
+			<Toaster position="top-center" richColors />
 		</>
 	)
 }

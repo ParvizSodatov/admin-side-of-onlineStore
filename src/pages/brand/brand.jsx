@@ -26,6 +26,7 @@ import EditNoteIcon from '@mui/icons-material/EditNote'
 import DeleteIcon from '@mui/icons-material/Delete'
 import { Link } from 'react-router-dom'
 import { blue } from '@mui/material/colors'
+import { toast, Toaster } from 'sonner'
 export default function Brand() {
 	const [openEdit, setOpenEdit] = useState(false)
 	const [brandId, setBrandId] = useState(null)
@@ -47,6 +48,10 @@ export default function Brand() {
 		console.log(addName)
 
 		dispatch(addBrands(newAddBrand))
+      toast.success('the brand added succesfuly')
+		  		setOpenAdd(false)
+				setAddName('')
+
 	}
 	const handleEditClickOpen = el => {
 		setOpenEdit(true)
@@ -64,6 +69,7 @@ export default function Brand() {
 		}
 		dispatch(editBrands(newEditUser))
 		setOpenEdit(false)
+		toast.success('The brand updated succesfully')
 	}
 	const dispatch = useDispatch()
 	const { brand } = useSelector(store => store.brand)
@@ -186,7 +192,7 @@ export default function Brand() {
 						margin='dense'
 						id='name'
 						name='email'
-						label='Email Address'
+						label='Add Brand'
 						value={addName}
 						onChange={e => setAddName(e.target.value)}
 						type='text'
@@ -201,6 +207,7 @@ export default function Brand() {
 					</DialogActions>
 				</DialogContent>
 			</Dialog>
+			  <Toaster position="top-center" richColors />
 		</>
 	)
 }

@@ -1,6 +1,6 @@
 import { axiosRequest, axiosStandart } from '@/utils/axios'
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-
+import { toast } from 'sonner'
 export const getProduct = createAsyncThunk('dashboard/getProduct', async () => {
 	try {
 		let { data } = await axiosStandart.get('/Product/get-products')
@@ -16,6 +16,7 @@ export const deleteProduct = createAsyncThunk(
 		try {
 			await axiosRequest.delete(`/Product/delete-product?id=${id}`)
 			dispatch(getProduct())
+			toast.success('the selected product is deleted')
 		} catch (error) {
 			console.log(error)
 		}
@@ -35,7 +36,7 @@ export const addProduct = createAsyncThunk(
 	async formdata => {
 		try {
 			await axiosRequest.post('/Product/add-product', formdata)
-		
+	      
 		} catch (error) {
 			console.log(error)
 		}
@@ -76,6 +77,7 @@ export const editProduct = createAsyncThunk(
 				`/Product/update-product?Id=${id}&BrandId=${BrandId}&ColorId=5&ProductName=${ProductName}&Description=${Description}&Quantity=${Quantity}&Weight=XL&Size=10&Code=${Code}&Price=${Price}&HasDiscount=${HasDiscount}&DiscountPrice=5&SubCategoryId=${SubCategoryId}`
 			)
 			dispatch(getProduct())
+			toast.success('Product updated successfully!')
 		} catch (error) {
 			console.log(error)
 		}

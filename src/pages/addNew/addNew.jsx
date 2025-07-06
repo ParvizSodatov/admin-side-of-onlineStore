@@ -19,6 +19,7 @@ import {
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
+import { toast, Toaster } from 'sonner'
 export default function AddNew() {
 	const dispatch = useDispatch()
 	const { colors } = useSelector(store => store.dashboard)
@@ -73,7 +74,9 @@ function clearAllForms(){
 		}
 	  const result=await dispatch(addProduct(formdata))
 	  if(addProduct.fulfilled.match(result)){
+		 toast.success('Product added successfully!')
 		navigate('/products')
+
 	  }
 		
 	}
@@ -271,6 +274,7 @@ function clearAllForms(){
 					</div>
 				</aside>
 			</section>
+			<Toaster position="top-center" richColors />
 		</>
 	)
 }

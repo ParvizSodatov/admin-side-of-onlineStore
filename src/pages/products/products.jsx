@@ -8,36 +8,63 @@ import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-// import EditSquareIcon from '@mui/icons-material/EditSquare';
 import { API } from '@/utils/config'
 import EditIcon from '@mui/icons-material/Edit'
 import { Link } from 'react-router-dom'
+import { toast, Toaster } from 'sonner'
+
 const Dashboard = () => {
 	const dispatch = useDispatch()
 	const { products } = useSelector(store => store.dashboard)
 
+	const [selectedProducts, setSelectedProducts] = useState([])
+
 	useEffect(() => {
 		dispatch(getProduct())
-	}, [])
+	}, [dispatch])
+
+
+	function handleSelect(id) {
+		if (selectedProducts.includes(id)) {
+			setSelectedProducts(selectedProducts.filter(pid => pid !== id))
+		} else {
+			setSelectedProducts([...selectedProducts, id])
+		}
+	}
+	function handleDeleteSelected() {
+		selectedProducts.forEach(id => {
+			dispatch(deleteProduct(id))
+		})
+		setSelectedProducts([]) 	
+	}
 	return (
 		<>
-			<div className='flex justify-around'>
+			<div className='flex justify-around items-center'>
 				<h1 className='text-[30px]'>Products</h1>
-				<Link to='/addNew'>
-					<Button sx={{ backgroundColor: '#2563EB', color: 'white' }}>
-						+Add Order
-					</Button>
-				</Link>
+				<div className='flex gap-4'>
+					<Link to='/addNew'>
+						<Button sx={{ backgroundColor: '#2563EB', color: 'white' }}>
+							+ Add Product
+						</Button>
+					</Link>
+					{selectedProducts.length > 0 && (
+						<Button
+							sx={{ backgroundColor: 'red', color: 'white' }}
+							onClick={handleDeleteSelected}
+						>
+							Remove Selected
+						</Button>
+					)}
+				</div>
 			</div>
-			<TableContainer component={Paper}>
+			<TableContainer component={Paper} sx={{ marginTop: '30px' }}>
 				<Table sx={{ minWidth: 650 }} aria-label='simple table'>
 					<TableHead>
 						<TableRow>
 							<TableCell>
 								<div className='flex items-center'>
-									<Checkbox defaultChecked />
 									<span className='text-[30px]'>Product</span>
 								</div>
 							</TableCell>
@@ -55,7 +82,10 @@ const Dashboard = () => {
 							>
 								<TableCell component='th' scope='row'>
 									<div className='flex items-center gap-[30px]'>
-										<Checkbox defaultChecked />
+										<Checkbox
+											checked={selectedProducts.includes(row.id)}
+											onChange={() => handleSelect(row.id)}
+										/>
 										<div className='flex items-center gap-[30px]'>
 											<img
 												className='w-[70px] h-[70px] rounded-[100px]'
@@ -66,7 +96,6 @@ const Dashboard = () => {
 										</div>
 									</div>
 								</TableCell>
-
 								<TableCell align='center'>{row.quantity}</TableCell>
 								<TableCell align='center'>{row.categoryName}</TableCell>
 								<TableCell align='center'>${row.price}</TableCell>
@@ -87,6 +116,7 @@ const Dashboard = () => {
 					</TableBody>
 				</Table>
 			</TableContainer>
+			<Toaster position="bottom-right" richColors />
 		</>
 	)
 }
