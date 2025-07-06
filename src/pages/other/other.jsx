@@ -87,11 +87,14 @@ export default function Other() {
     <>
       <section className="flex justify-between w-[80%]">
         <div className="flex gap-[20px]">
-          <Button sx={{ backgroundColor: 'blue', color: 'white' }}>
+          <Button variant='contained'>
             Category
           </Button>
           <Link to="/brand">
-            <Button sx={{ border: '1px solid blue' }}>Brand</Button>
+            <Button variant='outlined'>Brand</Button>
+          </Link>
+          <Link to="/subCategory">
+            <Button variant='outlined'>SubCategory</Button>
           </Link>
         </div>
         <div>

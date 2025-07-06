@@ -1,4 +1,4 @@
-import { axiosStandart } from '@/utils/axios'
+import { axiosRequest, axiosStandart } from '@/utils/axios'
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
 export const getSubCategory=createAsyncThunk('subCategory/getSubCategory',async () => {
@@ -10,6 +10,30 @@ try {
 	
 }	
 })
+
+
+export const deletSubCategory=createAsyncThunk('subCategory/deletSubCategory',async (id,{dispatch}) => {
+	try {
+		await axiosRequest.delete(`/SubCategory/delete-sub-category?id=${id}`)
+	    dispatch(getSubCategory())
+	} catch (error) {
+		console.log(error);
+		
+	}
+})
+
+export const addSubcCategory=createAsyncThunk('subCategory/addSubcCategory',async (newSub,{dispatch}) => {
+	try {
+		await axiosRequest.post(`/SubCategory/add-sub-category?CategoryId=${newSub.CategoryId}&SubCategoryName=${newSub.SubCategoryName}`)
+		dispatch(getSubCategory())
+	} catch (error) {
+		console.log();
+		
+	}
+})
+
+
+
 export const subCategorySlice=createSlice({
 	name:'subCategory',
 	initialState:{

@@ -45,7 +45,7 @@ export default function Brand() {
 			BrandName: addName,
 			// dispatch
 		}
-		console.log(addName)
+		// console.log(addName)
 
 		dispatch(addBrands(newAddBrand))
       toast.success('the brand added succesfuly')
@@ -73,7 +73,7 @@ export default function Brand() {
 	}
 	const dispatch = useDispatch()
 	const { brand } = useSelector(store => store.brand)
-	console.log('brand :', brand)
+	// console.log('brand :', brand)
 	useEffect(() => {
 		dispatch(getBrands())
 	}, [])
@@ -89,13 +89,16 @@ export default function Brand() {
 				</Link>
 				<h1 className='text-[30px]'>Other</h1>
 			</h1>
-			<div className='mt-[30px] flex justify-between w-[75%]'>
-				<div className='flex gap-[6px]'>
+			<div className='flex justify-between w-[75%]'>
+				<div className='flex gap-[20px]'>
 					<Link to='/other'>
 						<Button sx={{ border: '1px solid blue' }}>Category</Button>
 					</Link>
 
-					<Button sx={{ backgroundColor:'blue',color:'white' }}>Brand</Button>
+					<Button variant='contained'>Brand</Button>
+					<Link to='/subCategory'>
+					<Button variant='outlined'>SubCategory</Button>
+					</Link>
 				</div>
 
 				<Button onClick={handleAddClickOpen} sx={{ border: '1px solid blue' }}>

@@ -8,6 +8,7 @@ import Login from './pages/login/login'
 import AddNew from './pages/addNew/addNew'
 import EditProduct from './pages/editProduct/editProduct'
 import Brand from './pages/brand/brand'
+import SubCategory from './pages/subCategory/subCategory'
 function App() {
   const router = createBrowserRouter([
     {
@@ -39,6 +40,10 @@ function App() {
           {
           path: "/brand",
           element: <Brand/>,
+        },
+         {
+          path: "/subCategory",
+          element: <SubCategory/>,
         },
          {
 
