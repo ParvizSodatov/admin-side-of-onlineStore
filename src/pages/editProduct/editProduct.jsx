@@ -23,7 +23,8 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import { useEffect, useState } from 'react'
 import { Upload } from '@mui/icons-material'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
+
 export default function EditProduct() {
 	const { id } = useParams()
 	const { productByid } = useSelector(store => store.dashboard)
@@ -44,6 +45,7 @@ export default function EditProduct() {
 	const { category } = useSelector(store => store.category)
 	const { brand } = useSelector(store => store.brand)
 	const { subCategor } = useSelector(store => store.subCategory)
+ const navigate=useNavigate()
 	function clearAllForms() {
 		setAddName('')
 		setCode('')
@@ -59,33 +61,39 @@ export default function EditProduct() {
 		setFiles(null)
 	}
 
-	function handleEdit(){
-		let newEditUser={
+	async function handleEdit() {
+		let newEditUser = {
 			id: id,
-			ProductName:productName,
-			Code:code,
-			Description:description,
-			BrandId:brands,
-			SubCategoryId:subcategory,
-			Price:price,
-			HasDiscount:false,
-			ColorId:colorId,
-			Quantity:count
+			ProductName: productName,
+			Code: code,
+			Description: description,
+			BrandId: brands,
+			SubCategoryId: subcategory,
+			Price: price,
+			HasDiscount: false,
+			ColorId: colorId,
+			Quantity: count,
 		}
-		dispatch(editProduct(newEditUser))
+		const result=await dispatch(editProduct(newEditUser))
+		if(editProduct.fulfilled.match(result)){
+			navigate('/products')
+		}
 	}
+
+	
 	useEffect(() => {
-		setAddName(productByid.productName)
-		setCode(productByid.code)
-		setDescription(productByid.description)
-		setBrands(productByid.brand)
-		setSubcategories(productByid.subCategory)
-		setPrice(productByid.price)
-		setDiscount(productByid.discount)
-		setCount(productByid.quantity)
-
-	},[productByid])
-
+		if (productByid && brand.length > 0 && subCategor.length > 0) {
+			setAddName(productByid.productName)
+			setCode(productByid.code)
+			setDescription(productByid.description)
+			const foundBrand = brand.find(b => b.brandName === productByid.brand)
+			setBrands(foundBrand ? foundBrand.id : '')
+			setSubcategories(productByid.subCategoryId)
+			setPrice(productByid.price)
+			setDiscount(productByid.discountPrice)
+			setCount(productByid.quantity)
+		}
+	}, [productByid, brand, subCategor])
 	useEffect(() => {
 		dispatch(getCategory())
 		dispatch(getColors())
@@ -93,12 +101,10 @@ export default function EditProduct() {
 		dispatch(getSubCategory())
 		dispatch(getBrands())
 	}, [])
-
 	return (
 		<>
 			<div className='flex text-[40px] items-center justify-around gap-[550px]'>
 				<div>
-					{' '}
 					<Link to='/products'>
 						<Button>
 							<ArrowBackIcon sx={{ fontSize: '44px' }} />
@@ -116,7 +122,7 @@ export default function EditProduct() {
 				</div>
 			</div>
 			<h1 className='font-bold mt-[30px] ml-[30px] text-[26px]'>information</h1>
-			<section className='flex  gap-[100px]'>
+			<section className='flex gap-[100px]'>
 				<aside className='mt-[30px] w-[90%]'>
 					<div className='w-[100%] flex justify-between'>
 						<TextField
@@ -173,7 +179,7 @@ export default function EditProduct() {
 						<Box sx={{ minWidth: 120, width: '260px' }}>
 							<FormControl fullWidth>
 								<InputLabel id='demo-simple-select-label'>
-									subcategory
+									Subcategory
 								</InputLabel>
 								<Select
 									labelId='demo-simple-select-label'
@@ -183,7 +189,9 @@ export default function EditProduct() {
 									label='Categories'
 								>
 									{subCategor?.map(el => (
-										<MenuItem value={el.id}>{el.subCategoryName}</MenuItem>
+										<MenuItem key={el.id} value={el.id}>
+											{el.subCategoryName}
+										</MenuItem>
 									))}
 								</Select>
 							</FormControl>
@@ -193,7 +201,6 @@ export default function EditProduct() {
 					<div className='flex justify-between mt-[20px] gap-[20px]'>
 						<TextField
 							id='outlined-basic'
-						
 							value={price}
 							onChange={e => setPrice(e.target.value)}
 							variant='outlined'
@@ -227,12 +234,11 @@ export default function EditProduct() {
 									key={el.id}
 									style={{ backgroundColor: el.colorName }}
 									className={`w-[70px] h-[70px] rounded-full border 
-		  ${colorId === el.id ? 'border-4 border-blue-600' : 'border-gray-400 dark:border-gray-600'}`}
+										${colorId === el.id ? 'border-4 border-blue-600' : 'border-gray-400 dark:border-gray-600'}`}
 								></div>
 							))}
 						</div>
 					</div>
-				
 				</aside>
 			</section>
 		</>

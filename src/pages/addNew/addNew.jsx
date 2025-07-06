@@ -18,7 +18,7 @@ import {
 } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 export default function AddNew() {
 	const dispatch = useDispatch()
 	const { colors } = useSelector(store => store.dashboard)
@@ -37,7 +37,7 @@ export default function AddNew() {
 	const { brand } = useSelector(store => store.brand)
 	//   const [files, setFiles] = useState(null);
 	const { subCategor } = useSelector(store => store.subCategory)
-
+   const navigate=useNavigate()
 function clearAllForms(){
 	setAddName('')
 	setCode('')
@@ -56,7 +56,7 @@ function clearAllForms(){
 
 
 	
-	function handleAdd(e) {
+	async function handleAdd(e) {
 		e.preventDefault()
 		const formdata = new FormData()
 		formdata.append('ProductName', productName)
@@ -71,9 +71,13 @@ function clearAllForms(){
       for(let i=0;i<addImage.length;i++){
 			 formdata.append('Images',addImage[i])
 		}
-		dispatch(addProduct(formdata))
-		clearAllForms()
+	  const result=await dispatch(addProduct(formdata))
+	  if(addProduct.fulfilled.match(result)){
+		navigate('/products')
+	  }
+		
 	}
+	
 	useEffect(() => {
 		dispatch(getCategory())
 		dispatch(getColors())
