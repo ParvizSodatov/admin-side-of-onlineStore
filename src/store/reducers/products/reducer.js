@@ -36,7 +36,7 @@ export const addProduct = createAsyncThunk(
 	async formdata => {
 		try {
 			await axiosRequest.post('/Product/add-product', formdata)
-	      
+	      toast.success('product addEd succesfully')
 		} catch (error) {
 			console.log(error)
 		}
@@ -83,6 +83,15 @@ export const editProduct = createAsyncThunk(
 		}
 	}
 )
+export const searchProduct=createAsyncThunk('dashboard/searchProduct',async (name) => {
+	try {
+		let {data}=await axiosStandart.get(`/Product/get-products?ProductName=${name}`)
+			return data.data.products
+	} catch (error) {
+		console.log(error);
+		
+	}
+})
 export const dashbordSlice = createSlice({
 	name: 'dashboard',
 	initialState: {
@@ -100,6 +109,10 @@ export const dashbordSlice = createSlice({
 		builder.addCase(getProductById.fulfilled, (state, action) => {
 			state.productByid = action.payload
 		})
+		builder.addCase(searchProduct.fulfilled,(state,action)=>{
+			state.products=action.payload
+		})
+
 	},
 })
 export default dashbordSlice.reducer

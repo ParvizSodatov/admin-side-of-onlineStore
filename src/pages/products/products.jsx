@@ -1,6 +1,10 @@
-import { deleteProduct, getProduct } from '@/store/reducers/products/reducer'
+import {
+	deleteProduct,
+	getProduct,
+	searchProduct,
+} from '@/store/reducers/products/reducer'
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
-import { Button, Checkbox } from '@mui/material'
+import { Button, Checkbox, TextField } from '@mui/material'
 import Paper from '@mui/material/Paper'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
@@ -18,13 +22,14 @@ import { toast, Toaster } from 'sonner'
 const Dashboard = () => {
 	const dispatch = useDispatch()
 	const { products } = useSelector(store => store.dashboard)
-
+	const [search, setSearch] = useState('')
 	const [selectedProducts, setSelectedProducts] = useState([])
-
+	function handleSearch(e) {
+		setSearch(e.target.value)
+	}
 	useEffect(() => {
 		dispatch(getProduct())
 	}, [dispatch])
-
 
 	function handleSelect(id) {
 		if (selectedProducts.includes(id)) {
@@ -37,12 +42,19 @@ const Dashboard = () => {
 		selectedProducts.forEach(id => {
 			dispatch(deleteProduct(id))
 		})
-		setSelectedProducts([]) 	
+		setSelectedProducts([])
 	}
+
 	return (
 		<>
 			<div className='flex justify-around items-center'>
-				<h1 className='text-[30px]'>Products</h1>
+				<TextField
+					placeholder='search..'
+					value={search}
+					onChange={e => {
+						setSearch(e.target.value), dispatch(searchProduct(e.target.value))
+					}}
+				/>
 				<div className='flex gap-4'>
 					<Link to='/addNew'>
 						<Button sx={{ backgroundColor: '#2563EB', color: 'white' }}>
@@ -116,7 +128,7 @@ const Dashboard = () => {
 					</TableBody>
 				</Table>
 			</TableContainer>
-			<Toaster position="bottom-right" richColors />
+			<Toaster position='bottom-right' richColors />
 		</>
 	)
 }
