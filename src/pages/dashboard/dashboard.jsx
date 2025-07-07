@@ -104,8 +104,7 @@ export default function Dashboard() {
       <Typography variant="h6" fontWeight={600} gutterBottom>
         Dashboard
       </Typography>
-
-      {/* Статистика */}
+      
       <Grid container spacing={2} mb={3}>
         <Grid item xs={12} sm={4}>
           <Paper

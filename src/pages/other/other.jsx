@@ -49,7 +49,7 @@ export default function Other() {
 
   const dispatch = useDispatch()
   const { category } = useSelector((store) => store.category)
-
+  //  console.log(category)
   async function handleAdd() {
     const formData = new FormData()
     formData.append('CategoryName', addCategoryName)
