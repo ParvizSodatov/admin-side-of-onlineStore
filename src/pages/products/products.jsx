@@ -100,7 +100,7 @@ const Dashboard = () => {
 										/>
 										<div className='flex items-center gap-[30px]'>
 											<img
-												className='w-[70px] h-[70px] rounded-[100px]'
+												className='w-[70px] h-[70px] rounded-[20px]'
 												src={`${API}/images/${row.image}`}
 												alt=''
 											/>
