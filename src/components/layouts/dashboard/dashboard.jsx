@@ -1,10 +1,11 @@
 import { extendTheme } from "@mui/material";
+import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
 import { AppProvider, DashboardLayout, PageContainer } from "@toolpad/core";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import BarChartIcon from "@mui/icons-material/BarChart";
 import LayersIcon from "@mui/icons-material/Layers";
-import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import {  Outlet, useLocation, useNavigate } from "react-router-dom";
 import LoginIcon from '@mui/icons-material/Login';
 const NAVIGATION = [
   { kind: "header", title: "Main items" },
@@ -12,7 +13,8 @@ const NAVIGATION = [
   { segment: "orders", title: "Orders", icon: <ShoppingCartIcon /> },
   { segment: "products", title: "Products", icon: <LayersIcon /> },
   { segment: "other", title: "Other", icon: <BarChartIcon /> },
-  { segment: "login", title: "Login", icon: <LoginIcon /> },
+  { segment: "login", title: "Login", icon: <LoginIcon  /> },
+  { segment: "login", title: "LogOut", icon: <MeetingRoomIcon  /> },
 ];
 const demoTheme = extendTheme({
   colorSchemes: { light: true, dark: true },
