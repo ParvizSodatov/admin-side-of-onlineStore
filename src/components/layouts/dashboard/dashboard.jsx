@@ -13,8 +13,8 @@ const NAVIGATION = [
   { segment: "orders", title: "Orders", icon: <ShoppingCartIcon /> },
   { segment: "products", title: "Products", icon: <LayersIcon /> },
   { segment: "other", title: "Other", icon: <BarChartIcon /> },
-  { segment: "login", title: "Login", icon: <LoginIcon  /> },
-  { segment: "login", title: "LogOut", icon: <MeetingRoomIcon  /> },
+  { segment: "login", title: "Log Out", icon: <LoginIcon  /> },
+  // { segment: "login", title: "LogOut", icon: <MeetingRoomIcon  /> },
 ];
 const demoTheme = extendTheme({
   colorSchemes: { light: true, dark: true },

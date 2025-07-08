@@ -26,7 +26,7 @@ import TrendingDownIcon from '@mui/icons-material/TrendingDown';
 
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 
-// Данные для графика
+
 const salesData = [
   { month: 'Jan', sales: 10 },
   { month: 'Feb', sales: 7 },
@@ -42,7 +42,7 @@ const salesData = [
   { month: 'Dec', sales: 34 },
 ];
 
-// Данные для таблиц и списков
+
 const recentTransactions = [
   { name: 'Jagarnath S.', date: '24.05.2023', amount: '$124.97', status: 'Paid' },
   { name: 'Anand G.', date: '23.05.2023', amount: '$55.42', status: 'Pending' },
@@ -65,7 +65,7 @@ const topSellingProducts = [
     title: 'Healthcare Erbology',
     subtitle: 'in Accessories',
     sales: '13,153',
-    img: 'https://i.ibb.co/F5PzXYq/product.png', // пример картинки
+    img: 'https://i.ibb.co/F5PzXYq/product.png', 
   },
   {
     title: 'Healthcare Erbology',
@@ -111,7 +111,7 @@ export default function Dashboard() {
             elevation={1}
             sx={{
               p: 2,
-              bgcolor: '#ffe4e1',
+              bgcolor: 'rgb(210, 13, 13)',
               display: 'flex',
               flexDirection: 'column',
               gap: 1,
@@ -130,7 +130,7 @@ export default function Dashboard() {
             elevation={1}
             sx={{
               p: 2,
-              bgcolor: '#fff7e6',
+              bgcolor: 'yellow',
               display: 'flex',
               flexDirection: 'column',
               gap: 1,
